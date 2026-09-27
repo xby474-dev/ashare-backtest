@@ -1,12 +1,12 @@
 # 实施计划和模块契约
 
-新建独立 Python 3.11+ 包；核心只用标准库，数据商 SDK 为可选依赖。与采用完整 Zipline 依赖栈或纯向量化相比，显式日事件循环更容易审计 A 股交易约束、权益到账和时间边界。现有论文资料不改动。
+独立 Python 3.11+ 包；核心只用标准库，数据商 SDK 为可选依赖。与采用完整 Zipline 依赖栈或纯向量化相比，显式日事件循环更容易审计 A 股交易约束、权益到账和时间边界。
 
 1. MVP：共享类型、显式交易日历、数据视图、账本、目标权重执行、离线策略演示。
 2. 完善：公司行动、费用、T+1、限价/容量、数据适配/快照缓存、研究实验、绩效及审计导出。
 3. 验证：单元及集成测试、前缀不变性/未来数据扰动、现金守恒、月末跨月开收盘执行；完整中文文档。
 
-## 统一接口（并行开发约定）
+## 统一接口与模块约定
 
 - `models.py` 共享 dataclass，所有日期内部使用 `datetime.date`，资金人民币，量为股/份。
 - `calendar.py`: `TradingCalendar(sessions)`, `.sessions` tuple, `next_session(day) -> date|None`, `previous_session(day)`, `is_month_end(day)`, `between(start,end)`。
@@ -15,7 +15,7 @@
 - `ledger.py`: `Portfolio(initial_cash)`, `.cash`, `.positions` dict symbol -> quantity；`quantity(symbol)`, `sellable(symbol, day, t_plus_one)`, `apply_fill(fill)`, `apply_action(action, day, eligible_quantity=None)`, `pay_receivables(day)`, `accrue_interest(day, amount)`, `equity(prices)`, `.receivables` numeric property, `.entries` list。权益在除权日确认为应收款，到账日可用于交易。
 - `analytics.py`: `compute_metrics(snapshots, initial_cash, annualization=252, risk_free_rate=0.0) -> dict`, `drawdown_episodes(snapshots, initial_cash) -> list[dict]`, `export_result(result, directory)`，导出 JSON/CSV、静态 HTML。
 - `experiments.py`: 通用 runner(params,start,end)->BacktestResult；parameter_grid/grid_search/ablation/walk_forward，逐次全新策略/账户，训练和测试时间不重叠，训练后只能使用测试之前历史热身。
-- 根任务负责 `engine.py`, `strategies.py`, `calendar.py`, 演示、CLI、集成测试及用户文档。
+- `engine.py`、`strategies.py` 与 `calendar.py` 连接数据、账本和执行模块，由演示、CLI 及集成测试验证完整运行流程。
 
 ## 核心边界
 

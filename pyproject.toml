@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=68"]
+requires = ["setuptools==84.0.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -8,6 +8,10 @@ version = "0.1.0"
 description = "Auditable, point-in-time event-driven A-share and ETF research engine"
 requires-python = ">=3.11"
 dependencies = []
+
+[project.urls]
+Repository = "https://github.com/xby474-dev/ashare-backtest"
+Documentation = "https://github.com/xby474-dev/ashare-backtest/blob/main/docs/REPRODUCIBILITY.md"
 
 [project.optional-dependencies]
 tushare = ["tushare>=1.4"]

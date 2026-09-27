@@ -1,5 +1,21 @@
 # 测试与验收记录
 
+## v0.1.0 固定环境验收（2026-09-27）
+
+在 Windows 上使用 Python 3.12.14、uv 0.12.2，通过 `uv sync --locked` 新建环境；构建工具固定为 setuptools 84.0.0。未启用可选数据 SDK，核心运行依赖为标准库。
+
+```bash
+uv run --no-sync python -m unittest discover -s tests -v
+uv run --no-sync python -m ashare demo --research --output outputs/release-v0.1.0
+uv run --no-sync python tools/verify_demo.py outputs/release-v0.1.0 --replay
+```
+
+本次结果：**139 项测试全部通过；22 个独立归档的现金与持仓对账、文件哈希校验及逐字节重放全部通过。** 输出保存在被 Git 忽略的 `outputs/release-v0.1.0/` 中。GitHub Actions 配置采用相同的固定解释器和锁文件，在 Windows 与 Linux 上执行测试、合成演示和重放检查；各次运行结果以仓库 Actions 记录为准。
+
+本次整理未改变回测引擎、策略或测试实现，不新增真实市场实证结果。研究模块范围及未实现部分见 [REPRODUCIBILITY.md](REPRODUCIBILITY.md)。
+
+## 初始功能验收
+
 执行日期：2026-09-22。环境：Windows / Python 3.12.14；核心无第三方依赖。
 
 ## 已执行

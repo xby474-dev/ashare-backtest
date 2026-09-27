@@ -2,11 +2,29 @@
 
 可运行的 Python 3.11+ 研究项目。核心、测试、报告均只依赖标准库；Tushare / AkShare 下载为可选扩展。信号、执行、现金流和估值按事件推进，目标是让每一笔结果能回到输入数据与账本核验。
 
-本项目借鉴 Zipline 的事件驱动与数据视图思想，采用较小的模块边界，没有复制其资产数据库、Pipeline 或分钟仿真体系。现有工作区论文资料未改动。
+本项目借鉴 Zipline 的事件驱动与数据视图思想，采用较小的模块边界，没有复制其资产数据库、Pipeline 或分钟仿真体系。
+
+**固定研究基线：[v0.1.0](https://github.com/xby474-dev/ashare-backtest/tree/v0.1.0)。** 参考环境为 Python 3.12.14，环境文件为 [`.python-version`](.python-version)、[`pyproject.toml`](pyproject.toml) 和 [`uv.lock`](uv.lock)。完整运行步骤和研究模块对应关系见 [研究代码与复现说明](docs/REPRODUCIBILITY.md)，版本变更见 [CHANGELOG.md](CHANGELOG.md)。
+
+当前代码位于 `ashare/`，提供回测与审计原型。申请书中的 `src/` 是后续研究代码的组织方案；条件回调、嵌套预测回归、MSE 和 Rank IC 尚未实现，不能将合成示例解释为完整研究或真实市场实证结果。
 
 ## 立即运行
 
-在本目录的 PowerShell 中（启动脚本会优先使用 `.venv`，其次使用当前 Codex 已有 Python）：
+推荐按固定版本恢复环境后运行（需要 Git 和 uv 0.12.2）：
+
+```bash
+git clone https://github.com/xby474-dev/ashare-backtest.git
+cd ashare-backtest
+git checkout --detach v0.1.0
+uv sync --locked
+uv run --no-sync python -m unittest discover -s tests -v
+uv run --no-sync python -m ashare demo --research --output outputs/demo
+uv run --no-sync python tools/verify_demo.py --replay
+```
+
+`uv sync --locked` 默认只安装本项目，不启用可选数据 SDK。`uv.lock` 也记录可选依赖，但不代表已完成真实数据接口的联网验收。
+
+在已经准备好 `.venv` 的 PowerShell 中，也可以使用快捷脚本：
 
 ```powershell
 .\run.ps1 test
