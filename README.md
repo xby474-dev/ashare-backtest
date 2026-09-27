@@ -10,7 +10,7 @@
 
 ## 立即运行
 
-推荐按固定版本恢复环境后运行（需要 Git 和 uv 0.12.2）：
+推荐按固定版本恢复环境后运行（需要 Git 和 uv 0.12.19）：
 
 ```bash
 git clone https://github.com/xby474-dev/ashare-backtest.git

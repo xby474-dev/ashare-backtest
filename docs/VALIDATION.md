@@ -2,7 +2,7 @@
 
 ## v0.1.0 固定环境验收（2026-09-27）
 
-在 Windows 上使用 Python 3.12.14、uv 0.12.2，通过 `uv sync --locked` 新建环境；构建工具固定为 setuptools 84.0.0。未启用可选数据 SDK，核心运行依赖为标准库。
+在 Windows 上使用 Python 3.12.14，通过 `uv sync --locked` 新建环境；构建工具固定为 setuptools 84.0.0。未启用可选数据 SDK，核心运行依赖为标准库。环境管理工具在发布前固定为 uv 0.12.19，以支持两平台的 Python 3.12.14 下载。
 
 ```bash
 uv run --no-sync python -m unittest discover -s tests -v
