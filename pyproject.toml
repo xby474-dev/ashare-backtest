@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ashare-backtest"
+version = "0.1.0"
+description = "Auditable, point-in-time event-driven A-share and ETF research engine"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.optional-dependencies]
+tushare = ["tushare>=1.4"]
+akshare = ["akshare>=1.16"]
+
+[project.scripts]
+ashare-backtest = "ashare.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["ashare*"]
