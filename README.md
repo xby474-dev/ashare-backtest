@@ -8,6 +8,14 @@
 
 当前代码位于 `ashare/`，提供回测与审计原型。申请书中的 `src/` 是后续研究代码的组织方案；条件回调、嵌套预测回归、MSE 和 Rank IC 尚未实现，不能将合成示例解释为完整研究或真实市场实证结果。
 
+## 研究说明
+
+**[阅读研究 README：模块职责、复现流程与基本核验](docs/research/README.md)**
+
+研究围绕 ETF 的中期动量、长期趋势与短期回调展开，分别检验新增信号的收益预测能力和扣费后的组合表现。研究 README 收录申请书的七个模块职责、环境与数据记录、参数与样本管理、运行顺序、结果留存和基本核验，并补充当前实现范围、固定版本运行命令及结果文件说明。
+
+拟定研究代码按 `data_pipeline.py`、`universe.py`、`signals.py`、`regression.py`、`portfolio.py`、`backtest.py`、`evaluation.py` 划分职责。现有 `ashare/` 包与这一规划的关系见[模块对应表](docs/REPRODUCIBILITY.md#研究模块与现有实现的对应关系)。
+
 ## 立即运行
 
 推荐按固定版本恢复环境后运行（需要 Git 和 uv 0.12.19）：
